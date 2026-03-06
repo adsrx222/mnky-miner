@@ -1,10 +1,29 @@
-`include "../utils.sv"
+`include "utils.sv"
 
 module message_scheduler (
     input  logic clk,
     input  logic reset_n,
     message_if.in message_in
 );
+
+    function automatic logic [31:0] rotr32 (
+        input logic [31:0] a,
+        input logic [4:0] b
+    );
+        rotr32 = (a >> b) | (a << (32 - b));
+    endfunction
+
+    function automatic logic [31:0] sigma0 (
+        input logic [31:0] a
+    );
+        sigma0 = rotr32(a,7) ^ rotr32(a,18) ^ ( a >> 3 );
+    endfunction
+
+    function automatic logic [31:0] sigma1 (
+        input logic [31:0] a
+    );
+        sigma1 = rotr32(a,17) ^ rotr32(a,19) ^ ( a >> 10 );
+    endfunction
 
     logic [2047:0] current_result;
 

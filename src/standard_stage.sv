@@ -7,6 +7,32 @@ module standard_stage # (parameter bit [31:0] k) (
     pipe_if.in prev_stage, 
     pipe_if.out next_stage
 );
+    function automatic logic [31:0] rotr32 (
+        input logic [31:0] a,
+        input logic [4:0] b
+    );
+        rotr32 = (a >> b) | (a << (32 - b));
+    endfunction
+    
+    function automatic logic [31:0] sum0 (
+        input logic [31:0] a
+    );
+        sum0 = rotr32(a,2) ^ rotr32(a,13) ^ rotr32(a,22);
+    endfunction
+
+    function automatic logic [31:0] sum1 (
+        input logic [31:0] a
+    );
+        sum1 = rotr32(a,6) ^ rotr32(a,11) ^ rotr32(a,25);
+    endfunction
+
+    function automatic logic [31:0] ch (
+        input logic [31:0] a,
+        input logic [31:0] b,
+        input logic [31:0] c
+    );
+        ch = (a & b) ^ (~a & c);
+    endfunction
 
     logic [31:0] csa0_sum;
     logic [31:0] csa0_carry;

@@ -1,8 +1,8 @@
 `timescale 1ns/1ps
-`include "../message_if.sv"
-`include "../std_pipeline/pipecore_if.sv"
-`include "../communications/uart_if.sv"
-`include "../utils.sv"
+`include "message_if.sv"
+`include "std_pipeline/pipecore_if.sv"
+`include "communications/uart_if.sv"
+`include "utils.sv"
 
 module sha256_top(
     input  logic clk,
